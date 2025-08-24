@@ -31,5 +31,3 @@ switch (operator) {
     break;
 }
 }
-calculate(1,"/",1)
-
