@@ -1,48 +1,78 @@
+const text = document.querySelector("span");
+const display = document.querySelector(".display");
 const btnNum = document.querySelectorAll(".number");
-const operators = document.querySelectorAll(".opp");
-const displayText = document.querySelector("span");
+const btnOperation = document.querySelectorAll(".opp");
 const equal = document.querySelector(".equal");
+const dot = document.querySelector(".dot");
 const clear = document.querySelector("#AC");
-let defaultNum = 0;
-let firstNumber;
-let secondNumber;
-let operation = "";
+let firstNum;
+let secondNum;
+let opp;
+let shouldResetFlag = false;
 
-function toNumber(a,b) {
-	firstNumber = parseFloat(a);
-	secondNumber = parseFloat(b);
+function isElementEmpty() {
+	return display.innerText === "";
 }
 
-btnNum.forEach((btn) => {
-	const number = btn.innerText;
-	btn.addEventListener('click', () => {
-		displayText.append(number);
-	});
-})
+function toNumber (x) {
+	return parseFloat(x);
+};	
 
-operators.forEach ( opp => {
-	opp.addEventListener('click' , () => {
-		firstNumber = displayText.innerText;
-		displayText.innerText="";
-		operation = opp.innerText;
+btnNum.forEach(btn => {
+	btn.addEventListener('click', () => {
+		if (shouldResetFlag) {
+			display.innerText = "";
+			shouldResetFlag = false;
+		}
+		const number = btn.innerText;
+		const displayText = document.createElement("span");
+		displayText.innerText = number;
+		display.append(displayText);
 	});
+});
+
+btnOperation.forEach(btn => {
+	btn.addEventListener('click', () => {
+		const displayText = document.createElement("span");
+		let number = display.innerText;
+		secondNum = toNumber(number);
+		firstNum = operate(firstNum,opp,secondNum)
+		opp = btn.innerText;
+		if (isNaN(firstNum)) {
+			firstNum = secondNum;
+			display.innerText = "";
+			console.log(`NaN ${secondNum}`);
+		} else {
+			console.log(firstNum);
+			console.log(`Second Number: ${secondNum}`);
+			console.log(opp);
+			shouldResetFlag = true;
+			display.innerText = "";
+			displayText.innerText = firstNum;
+			display.append(displayText);
+		}
+	});
+});
+
+equal.addEventListener('click', () => {
+		const displayText = document.createElement("span");
+		let number = display.innerText;
+		secondNum= toNumber(number);
+			shouldResetFlag = true;
+			display.innerText = "";
+		firstNum = operate(firstNum,opp,secondNum)
+	opp = undefined;
+			displayText.innerText = firstNum;
+			display.append(displayText);
 })
 
 clear.addEventListener('click', () => {
-	displayText.innerText="";
-	firstNumber = defaultNum;
-	secondNumber = defaultNum;
-	operation = "";
+	firstNum = undefined;
+	secondNum = undefined;
+	shouldResetFlag = false;
+	opp = undefined;
+	display.innerText = "";
 })
-
-equal.addEventListener('click', () => {
-		secondNumber = displayText.innerText;
- toNumber(firstNumber,secondNumber);
-const answer = operate(firstNumber,operation,secondNumber);
-	displayText.innerText="";
-		displayText.append(answer);
-	firstNumber = answer;
-});
 
 function add(num1, num2) {
 	return num1 + num2 ;	
