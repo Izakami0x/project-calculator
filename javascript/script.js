@@ -41,11 +41,7 @@ btnOperation.forEach(btn => {
 		if (isNaN(firstNum)) {
 			firstNum = secondNum;
 			display.innerText = "";
-			console.log(`NaN ${secondNum}`);
 		} else {
-			console.log(firstNum);
-			console.log(`Second Number: ${secondNum}`);
-			console.log(opp);
 			shouldResetFlag = true;
 			display.innerText = "";
 			displayText.innerText = firstNum;
