@@ -22,9 +22,7 @@ align-items: center;
 
 .display {
 	background-color: gray;
-	height: 20px;
-	width: 100%;
-	min-height: 20px;
+	min-height: 25px;
 	min-width: 80px;
 	max-height: 20px;
 }

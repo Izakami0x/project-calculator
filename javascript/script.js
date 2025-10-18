@@ -9,6 +9,7 @@ let firstNum;
 let secondNum;
 let opp;
 let shouldResetFlag = false;
+let periodCounter = 0;
 
 function isElementEmpty() {
 	return display.innerText === "";
@@ -37,6 +38,7 @@ btnOperation.forEach(btn => {
 		let number = display.innerText;
 		secondNum = toNumber(number);
 		firstNum = operate(firstNum,opp,secondNum)
+		periodCounter = 0;
 		opp = btn.innerText;
 		if (isNaN(firstNum)) {
 			firstNum = secondNum;
@@ -58,6 +60,7 @@ equal.addEventListener('click', () => {
 			display.innerText = "";
 		firstNum = operate(firstNum,opp,secondNum)
 	opp = undefined;
+	periodCounter = 0;
 			displayText.innerText = firstNum;
 			display.append(displayText);
 })
@@ -67,7 +70,17 @@ clear.addEventListener('click', () => {
 	secondNum = undefined;
 	shouldResetFlag = false;
 	opp = undefined;
+	periodCounter = 0;
 	display.innerText = "";
+})
+
+dot.addEventListener('click', () => {
+	const period = document.createElement("span");
+	period.innerText = "."
+	if (periodCounter == 0) {
+		periodCounter++;
+	display.appendChild(period);
+	}
 })
 
 function add(num1, num2) {
